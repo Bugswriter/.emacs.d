@@ -1,0 +1,6 @@
+*
+!.gitignore
+!init.el
+!README.md
+!*/img/
+!avatar.jpg
