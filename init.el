@@ -12,14 +12,24 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
+(use-package doom-themes
+  :if window-system
+  :ensure t
+  :init
+  (load-theme 'doom-badger t)
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (global-display-line-numbers-mode 1)
+  (window-divider-mode 1))
+
 (setq use-dialog-box nil)
 (setq use-file-dialog nil)
 
+
 (add-to-list 'default-frame-alist
 	     '(font . "JetBrains Mono-12"))
+
 
 (setq make-backup-files nil)
 (setq auto-save-default nil)
@@ -31,14 +41,8 @@
   :ensure t
   :config
   (dashboard-setup-startup-hook)
-  (setq dashboard-startup-banner "~/.emacs.d/img/avatar.png")
+  (setq dashboard-startup-banner "~/.emacs.d/avatar.png")
   (setq dashboard-banner-logo-title "I am just a coder for fun"))
-
-(use-package doom-themes
-  :if window-system
-  :ensure t
-  :init
-  (load-theme 'doom-dark+ t))
 
 (use-package switch-window
   :ensure t
@@ -94,7 +98,6 @@
   :bind
   ("M-g" . magit-status))
 
-
 (use-package evil
   :ensure t
   :config
@@ -107,3 +110,4 @@
   (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
   :init
   (key-chord-mode 1))
+
