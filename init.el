@@ -12,21 +12,11 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
 (setq use-dialog-box nil)
 (setq use-file-dialog nil)
-
-(global-display-line-numbers-mode 1)
-(use-package doom-themes
-  :if window-system
-  :ensure t
-  :config
-  (load-theme 'doom-molokai t)
-  (doom-themes-org-config)
-  (doom-themes-visual-bell-config)
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  (fringe-mode -1)
-  (scroll-bar-mode -1))
 
 (add-to-list 'default-frame-alist
 	     '(font . "JetBrains Mono-12"))
@@ -41,8 +31,30 @@
   :ensure t
   :config
   (dashboard-setup-startup-hook)
-  (setq dashboard-startup-banner "~/.emacs.d/avatar.jpg")
+  (setq dashboard-startup-banner "~/.emacs.d/img/avatar.png")
   (setq dashboard-banner-logo-title "I am just a coder for fun"))
+
+(use-package doom-themes
+  :if window-system
+  :ensure t
+  :init
+  (load-theme 'doom-dark+ t))
+
+(use-package switch-window
+  :ensure t
+  :config
+  (setq switch-window-input-style 'minibuffer)
+  (setq switch-window-increase 4)
+  (setq switch-window-threshold 2)
+  (setq switch-window-shortcut-style 'qwerty)
+  (setq switch-window-qwerty-shortcuts
+	'("a" "s" "d" "f" "j" "k" "l"))
+  :bind
+  ([remap other-window] . switch-window))
+
+(use-package hungry-delete
+  :ensure t
+  :config (global-hungry-delete-mode))
 
 (use-package org-bullets
   :ensure t
@@ -74,23 +86,24 @@
   :ensure t
   :bind ("C-s" . swiper))
 
-(use-package ox-reveal
-  :ensure ox-reveal
+(use-package magit
+  :ensure t
   :config
-  (setq org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js")
-  (setq org-reveal-mathjax t))
+  (setq magit-push-always-verify nil)
+  (setq git-commit-summary-max-length 50)
+  :bind
+  ("M-g" . magit-status))
 
-(use-package htmlize
-  :ensure t)
 
 (use-package evil
   :ensure t
   :config
   (evil-mode 1))
-  
+
 (use-package key-chord
   :ensure t
   :config
-  (key-chord-mode 1)
-  (key-chord-define-global "jk" 'evil-normal-state)
-  (key-chord-define-global "kj" 'evil-normal-state))
+  (key-chord-define evil-insert-state-map "kj" 'evil-normal-state)
+  (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+  :init
+  (key-chord-mode 1))
