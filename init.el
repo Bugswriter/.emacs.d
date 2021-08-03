@@ -1,5 +1,4 @@
 ;; bugswriter's minimal emacs config
-;; https://github.com/bugswriter/.emacs.d
 
 (require 'package)
 (setq package-enable-at-startup nil)
