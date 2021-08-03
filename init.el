@@ -1,4 +1,5 @@
 ;; bugswriter's minimal emacs config
+;; https://github.com/bugswriter/.emacs.d
 
 (require 'package)
 (setq package-enable-at-startup nil)
@@ -20,7 +21,6 @@
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
-  (global-display-line-numbers-mode 1)
   (window-divider-mode 1))
 
 (setq use-dialog-box nil)
