@@ -12,23 +12,26 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(use-package doom-themes
+(use-package ewal
+  :init (setq ewal-use-built-in-always-p nil
+              ewal-use-built-in-on-failure-p t
+              ewal-built-in-palette "sexy-material"))
+
+(use-package ewal-spacemacs-themes
   :if window-system
   :ensure t
   :init
-  (load-theme 'doom-badger t)
+  (load-theme 'ewal-spacemacs-modern t)
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
   (window-divider-mode 1))
 
-(setq use-dialog-box nil)
-(setq use-file-dialog nil)
-
-
 (add-to-list 'default-frame-alist
 	     '(font . "JetBrains Mono-12"))
 
+(setq use-dialog-box nil)
+(setq use-file-dialog nil)
 
 (setq make-backup-files nil)
 (setq auto-save-default nil)
@@ -85,10 +88,6 @@
   :bind
   ("M-x" . smex))
 
-(use-package swiper
-  :ensure t
-  :bind ("C-s" . swiper))
-
 (use-package magit
   :ensure t
   :config
@@ -96,17 +95,16 @@
   (setq git-commit-summary-max-length 50)
   :bind
   ("M-g" . magit-status))
-
-(use-package evil
-  :ensure t
-  :config
-  (evil-mode 1))
-
-(use-package key-chord
-  :ensure t
-  :config
-  (key-chord-define evil-insert-state-map "kj" 'evil-normal-state)
-  (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
-  :init
-  (key-chord-mode 1))
-
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(ewal-spacemacs-themes which-key use-package switch-window swiper smex org-bullets magit key-chord ido-vertical-mode hungry-delete evil dashboard)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
