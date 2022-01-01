@@ -21,18 +21,17 @@
   :if window-system
   :ensure t
   :init
-  (load-theme 'ewal-spacemacs-modern t)
+  (load-theme 'ewal-spacemacs-classic t)
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
   (window-divider-mode 1))
 
 (add-to-list 'default-frame-alist
-	     '(font . "JetBrains Mono-12"))
+	     '(font . "JetBrains Mono-11"))
 
 (setq use-dialog-box nil)
 (setq use-file-dialog nil)
-
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 
@@ -67,27 +66,6 @@
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
-(use-package which-key
-  :ensure t
-  :init
-  (which-key-mode))
-
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
-(ido-mode 1)
-
-(use-package ido-vertical-mode
-  :ensure t
-  :init
-  (ido-vertical-mode 1))
-(setq ido-vertical-define-keys 'C-n-and-C-p-only)
-
-(use-package smex
-  :ensure t
-  :init (smex-initialize)
-  :bind
-  ("M-x" . smex))
-
 (use-package magit
   :ensure t
   :config
@@ -95,16 +73,23 @@
   (setq git-commit-summary-max-length 50)
   :bind
   ("M-g" . magit-status))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(ewal-spacemacs-themes which-key use-package switch-window swiper smex org-bullets magit key-chord ido-vertical-mode hungry-delete evil dashboard)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
+(use-package ox-hugo
+  :ensure t
+  :config
+  (setq org-hugo-base-dir "~/bwpw")
+  :after ox)
+
+(defun org-blog-header()
+  (interactive)
+  (insert "#+TITLE: \n")
+  (insert "#+DATE: \n")
+  (insert "#+DESCRIPTION: \n")
+  (insert "#+HUGO_SECTION: blog\n")
+  (insert "#+HUGO_TAGS: \n")
+  (insert "#+HUGO_CATEGORIES: \n"))
+
+(defun entry-time-stamp()
+  (interactive)
+  (insert (format-time-string "<i class='ts'>+%a %I:%m.%P %d.%m.%4Y</i>")))
+
