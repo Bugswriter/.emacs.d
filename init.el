@@ -74,21 +74,6 @@
   :bind
   ("M-g" . magit-status))
 
-(use-package ox-hugo
-  :ensure t
-  :config
-  (setq org-hugo-base-dir "~/bwpw")
-  :after ox)
-
-(defun org-blog-header()
-  (interactive)
-  (insert "#+TITLE: \n")
-  (insert "#+DATE: \n")
-  (insert "#+DESCRIPTION: \n")
-  (insert "#+HUGO_SECTION: blog\n")
-  (insert "#+HUGO_TAGS: \n")
-  (insert "#+HUGO_CATEGORIES: \n"))
-
 (defun entry-time-stamp()
   (interactive)
   (insert (format-time-string "<i class='ts'>+%a %I:%m.%P %d.%m.%4Y</i>")))
