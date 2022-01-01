@@ -76,5 +76,5 @@
 
 (defun entry-time-stamp()
   (interactive)
-  (insert (format-time-string "<i class='ts'>+%a %I:%m.%P %d.%m.%4Y</i>")))
+  (insert (format-time-string "<i class='ts'>%a %I:%m.%P %d.%m.%4Y</i>")))
 
