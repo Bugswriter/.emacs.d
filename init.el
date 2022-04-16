@@ -74,7 +74,32 @@
   :bind
   ("M-g" . magit-status))
 
-(defun entry-time-stamp()
-  (interactive)
-  (insert (format-time-string "<i class='ts'>%a %I:%m.%P %d.%m.%4Y</i>")))
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
 
+(use-package ido-vertical-mode
+  :ensure t
+  :init
+  (ido-vertical-mode 1))
+(setq ido-vertical-define-keys 'C-n-and-C-p-only)
+
+(use-package smex
+  :ensure t
+  :init (smex-initialize)
+  :bind
+  ("M-x" . smex))
+
+(use-package evil
+  :ensure t
+  :init
+  (evil-mode))
+
+(use-package key-chord
+  :ensure t
+  :config
+  (setq key-chord-two-keys-delay 0.5)
+  (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+  (key-chord-define evil-insert-state-map "kj" 'evil-normal-state)
+  :init
+  (key-chord-mode 1))
