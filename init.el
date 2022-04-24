@@ -12,30 +12,11 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (use-package ewal					 ;;
-;;   :init (setq ewal-use-built-in-always-p nil		 ;;
-;;               ewal-use-built-in-on-failure-p t	 ;;
-;;               ewal-built-in-palette "sexy-material")) ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (use-package ewal-spacemacs-themes	    ;;
-;;   :if window-system			    ;;
-;;   :ensure t				    ;;
-;;   :init				    ;;
-;;   (load-theme 'ewal-spacemacs-classic t) ;;
-;;   (menu-bar-mode -1)			    ;;
-;;   (tool-bar-mode -1)			    ;;
-;;   (scroll-bar-mode -1)		    ;;
-;;   (window-divider-mode 1))		    ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (use-package doom-themes
       :if window-system
       :ensure t
       :config
-      (load-theme 'doom-dark+ t)
+      (load-theme 'doom-acario-light t)
       (doom-themes-org-config)
       (doom-themes-visual-bell-config)
       (menu-bar-mode -1)
@@ -43,6 +24,9 @@
       (fringe-mode -1)
       (scroll-bar-mode -1))
 
+(use-package swiper
+  :ensure t
+  :bind ("C-s" . 'swiper))
 
 (add-to-list 'default-frame-alist
 	     '(font . "JetBrains Mono-11"))
@@ -107,6 +91,16 @@
   :bind
   ("M-x" . smex))
 
+(use-package which-key
+  :ensure t
+  :init
+  (which-key-mode))
+
+(use-package projectile
+  :ensure t
+  :init
+  (projectile-mode 1))
+
 (use-package evil
   :ensure t)
 
@@ -124,18 +118,24 @@
   :init
   (add-hook 'sgml-mode-hook 'emmet-mode)
   (add-hook 'css-mode-hook  'emmet-mode))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf" "234dbb732ef054b109a9e5ee5b499632c63cc24f7c2383a849815dacc1727cb6" default))
- '(package-selected-packages
-   '(company treemacs doom-themes use-package switch-window smex projectile org-bullets magit key-chord ido-vertical-mode hungry-delete ewal-spacemacs-themes evil emmet-mode dashboard)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
+(use-package lsp-mode
+  :ensure t
+  :hook
+  ((python-mode . lsp)))
+
+(use-package company
+  :ensure t)
+
+(use-package flycheck
+  :ensure t)
+
+(use-package lsp-ui
+  :ensure t
+  :commands lsp-ui-mode)
+
+(use-package lsp-pyright
+  :ensure t
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-pyright)
+                         (lsp))))
