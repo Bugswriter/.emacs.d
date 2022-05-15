@@ -1,0 +1,178 @@
+#+TITLE: My Emacs Config
+#+AUTHOR: Suraj Kushwah
+
+* Melpa Setup
+#+BEGIN_SRC emacs-lisp
+  (require 'package)
+  (setq package-enable-at-startup nil)
+
+  (add-to-list 'package-archives
+               '("melpa" . "https://melpa.org/packages/"))
+
+  (package-initialize)
+#+END_SRC
+* Easy Package Management
+#+BEGIN_SRC emacs-lisp
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+#+END_SRC
+* Appearance
+** Theme
+#+BEGIN_SRC emacs-lisp
+  (use-package doom-themes
+    :if window-system
+    :ensure t
+    :config
+    (load-theme 'doom-badger t)
+    (doom-themes-org-config)
+    (doom-themes-visual-bell-config))
+#+END_SRC
+** Font
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'default-frame-alist
+               '(font . "JetBrains Mono-11"))
+#+END_SRC
+* Better Search
+#+BEGIN_SRC emacs-lisp
+  (use-package swiper
+    :ensure t
+    :bind ("C-s" . 'swiper))
+#+END_SRC
+* Basic Interface Settings
+#+BEGIN_SRC emacs-lisp
+  (setq use-dialog-box nil)
+  (setq use-file-dialog nil)
+  (setq make-backup-files nil)
+  (setq auto-save-default nil)
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (fringe-mode -1)
+  (scroll-bar-mode -1)
+  (global-subword-mode 1)
+  (defalias 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+* Startup Dashboard
+#+BEGIN_SRC emacs-lisp
+  (use-package dashboard
+    :ensure t
+    :config
+    (dashboard-setup-startup-hook)
+    (setq dashboard-startup-banner "~/.emacs.d/avatar.png")
+    (setq dashboard-banner-logo-title "I am just a coder for fun"))
+#+END_SRC
+* Better Window Switch
+#+BEGIN_SRC emacs-lisp
+  (use-package switch-window
+    :ensure t
+    :config
+    (setq switch-window-input-style 'minibuffer)
+    (setq switch-window-increase 4)
+    (setq switch-window-threshold 2)
+    (setq switch-window-shortcut-style 'qwerty)
+    (setq switch-window-qwerty-shortcuts
+          '("a" "s" "d" "f" "j" "k" "l"))
+    :bind
+    ([remap other-window] . switch-window))
+#+END_SRC
+* Org Mode
+** Org Mode Bullets
+#+BEGIN_SRC emacs-lisp
+  (use-package org-bullets
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+END_SRC
+* Git Integration
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :ensure t
+    :config
+    (setq magit-push-always-verify nil)
+    (setq git-commit-summary-max-length 50)
+    :bind
+    ("M-g" . magit-status))
+#+END_SRC  
+* Better Bottom Menu
+#+BEGIN_SRC emacs-lisp
+  (setq ido-enable-flex-matching t)
+  (setq ido-everywhere t)
+  (ido-mode 1)
+
+  (use-package ido-vertical-mode
+    :ensure t
+    :init
+    (ido-vertical-mode 1))
+  (setq ido-vertical-define-keys 'C-n-and-C-p-only)
+
+  (use-package smex
+    :ensure t
+    :init (smex-initialize)
+    :bind
+    ("M-x" . smex))
+#+END_SRC  
+* Extra Goodies
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key
+    :ensure t
+    :init
+    (which-key-mode))
+#+END_SRC
+* Projectile
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :ensure t
+    :init
+    (projectile-mode 1))
+#+END_SRC
+* My ExtraMarital Vim Affair
+#+BEGIN_SRC emacs-lisp
+  (use-package evil
+    :ensure t)
+
+  (use-package key-chord
+    :ensure t
+    :config
+    (setq key-chord-two-keys-delay 0.5)
+    (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+    (key-chord-define evil-insert-state-map "kj" 'evil-normal-state)
+    :init
+    (key-chord-mode 1))
+#+END_SRC  
+* IDE Features
+#+BEGIN_SRC emacs-lisp
+  (use-package lsp-mode
+    :ensure t
+    :hook
+    ((python-mode . lsp)))
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (use-package company
+    :ensure t)
+#+END_SRC  
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck
+    :ensure t)
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (use-package lsp-ui
+    :ensure t
+    :commands lsp-ui-mode)
+#+END_SRC
+* Language Features
+** HTML
+#+BEGIN_SRC emacs-lisp
+  (use-package emmet-mode
+    :ensure t
+    :init
+    (add-hook 'sgml-mode-hook 'emmet-mode)
+    (add-hook 'css-mode-hook  'emmet-mode))
+#+END_SRC  
+** Python
+#+BEGIN_SRC emacs-lisp
+  (use-package lsp-pyright
+    :ensure t
+    :hook (python-mode . (lambda ()
+                           (require 'lsp-pyright)
+                           (lsp))))
+#+END_SRC

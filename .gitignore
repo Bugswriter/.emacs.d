@@ -1,6 +1,7 @@
 *
 !.gitignore
 !init.el
+!config.org
 !README.md
 !*/img/
 !avatar.png
